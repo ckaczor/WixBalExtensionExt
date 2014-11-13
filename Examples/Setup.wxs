@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Simple WiX install for BalExtensionExt examples.
+-->
+
+<!-- This is application version number, update for each release -->
+<?ifndef Version?>
+<?define Version = "$(bal.Version(1.0))" ?>
+<?endif ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+  <Product Id="*" Name="BalExtensionExt example $(var.Version)" Language="1033" Version="$(var.Version)" Manufacturer="ACME Corporation" UpgradeCode="FBE213AF-D840-4FCE-8719-3DA26AC76F12">
+    <Package Description="WiX install for BalExtensionExt examples." InstallerVersion="200" Compressed="yes" InstallPrivileges="elevated" InstallScope="perMachine" />
+
+    <MajorUpgrade Schedule="afterInstallValidate" DowngradeErrorMessage="A later version of [ProductName] is already installed." />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder" Name="Program Files">
+        <Directory Id="APPLICATIONFOLDER" Name="ACME" />
+      </Directory>
+    </Directory>
+
+    <Feature Id="DefaultFeature" Level="1" ConfigurableDirectory="APPLICATIONFOLDER">
+      <ComponentGroupRef Id="Test" />
+    </Feature>
+
+    <MediaTemplate EmbedCab="yes" />
+
+  </Product>
+
+  <Fragment>
+    <ComponentGroup Id="Test">
+      <Component Directory="APPLICATIONFOLDER">
+        <File Source="Resource\License.htm" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

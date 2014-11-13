@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+  This example demonstrates the Hyperlink2License UI built in to WixBalExtensionExt.
+  
+  It also shows how to use the custom action extension.
+-->
+<Wix RequiredVersion="3.7.1224.0" 
+  xmlns="http://schemas.microsoft.com/wix/2006/wi"
+  xmlns:bal="http://schemas.microsoft.com/wix/BalExtension"
+  xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <Bundle Name="Sample Burn Installation" Version="$(bal.Version(1.0))" UpgradeCode="2C81F0BB-1891-4E83-B71A-5160BA33D985"
+    Manufacturer="ACME"
+    AboutUrl="http://wixtoolset.org">
+
+    <BootstrapperApplicationRef Id="WixExtendedBootstrapperApplication.HyperlinkLicense">
+      <!-- Note: the name attibute must be "bafunctions.dll" but the source can be anything -->
+      <Payload Name="bafunctions.dll" Compressed="yes" SourceFile="bafunctions.dll" />
+      <Payload SourceFile="Resource\LogoSide.png" />
+      <Payload SourceFile="Resource\Logo.png" />
+    </BootstrapperApplicationRef>
+    <WixVariable Id="WixExtbaLicenseUrl" Value="" />
+    <WixVariable Id="WixExtbaThemeXml" Value="Resource\Bundle3Theme.xml" />
+    <WixVariable Id="WixExtbaThemeWxl" Value="Resource\HyperlinkTheme.wxl" />
+
+    <Variable Name="InstallFolder" Type="string" Value="[ProgramFilesFolder]ACME" />
+    <Variable Name="InstallFolder2" Type="string" Value="[WindowsVolume]Database" />
+
+    <Variable Name="RadioButton1" Type="numeric" Value="0" />
+    <Variable Name="RadioButton2" Type="numeric" Value="1" />
+    <Variable Name="RadioButton3" Type="numeric" Value="0" />
+    <Variable Name="RadioButton4" Type="numeric" Value="0" />
+
+    <Chain DisableSystemRestore="yes">
+      <PackageGroupRef Id="NetFx40Redist" />
+      <MsiPackage
+        Id="Setup"
+        Compressed="yes"
+        SourceFile="Setup.msi"
+        Vital="yes">
+        <MsiProperty Name="APPLICATIONFOLDER" Value="[InstallFolder]" />
+        <MsiProperty Name="RadioButton" Value="[RadioButton]" />
+      </MsiPackage>
+    </Chain>
+
+  </Bundle>
+</Wix>

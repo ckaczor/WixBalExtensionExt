@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="WriteVersionFiles" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <MajorBuildNumber>1</MajorBuildNumber>
+    <MinorBuildNumber>0</MinorBuildNumber>
+
+    <CppVersionFile>.\bafunctionsver.h</CppVersionFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Base>$([System.DateTime]::new(2000, 1, 1))</Base>
+    <BuildNumber>$([System.Convert]::ToInt32($([System.DateTime]::Now.ToUniversalTime().Subtract($(Base)).TotalDays)))</BuildNumber>
+    <BuildRevision>$([System.Convert]::ToInt32($([MSBuild]::Divide($([System.Convert]::ToInt32($([System.DateTime]::Now.ToUniversalTime().TimeOfDay.TotalSeconds))), 2))))</BuildRevision>
+
+    <FullBuildVersionString>$(MajorBuildNumber).$(MinorBuildNumber).$(BuildNumber).$(BuildRevision)</FullBuildVersionString>
+  </PropertyGroup>
+
+  <!--
+  ================================================================================================
+  VersionPrint
+
+    Displays the versions of this build.
+  ================================================================================================
+  -->
+  <Target Name="VersionPrint">
+    <Message Text="FullBuildVersionString = $(FullBuildVersionString)" />
+  </Target>
+
+  <!--
+  ================================================================================================
+  WriteCppVersionFile
+
+    Creates the wixver.h version file for C++ code.
+  ================================================================================================
+  -->
+  <Target Name="WriteCppVersionFile"
+          Returns="$(CppVersionFile)">
+    <ItemGroup>
+      <CppVersionLines Include="
+// &lt;auto-generated/&gt;
+#ifndef _VERSION_FILE_H_
+#define _VERSION_FILE_H_
+
+#define szVerMajorMinor &quot;$(MajorBuildNumber).$(MinorBuildNumber)&quot;
+#define szVerMajorMinorBuildRev &quot;$(FullBuildVersionString)&quot;
+#define rmj	$(MajorBuildNumber)
+#define rmm	$(MinorBuildNumber)
+#define rbd	$(BuildNumber)
+#define rev	$(BuildRevision)
+
+#endif
+"/>
+    </ItemGroup>
+
+    <WriteLinesToFile Overwrite="true"
+                File="$(CppVersionFile)"
+                Lines="@(CppVersionLines)" />
+    <ItemGroup>
+      <FileWrites Include="$(CppVersionFile)" />
+    </ItemGroup>
+  </Target>
+
+  <!--
+  ================================================================================================
+  WriteVersionFiles
+
+    Creates the version files.
+  ================================================================================================
+  -->
+  <Target Name="WriteVersionFiles" DependsOnTargets="VersionPrint;WriteCppVersionFile" />
+
+</Project>
