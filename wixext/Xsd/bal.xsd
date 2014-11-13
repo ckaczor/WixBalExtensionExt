@@ -105,12 +105,12 @@
                     <xs:documentation>If set to "yes", the LaunchTarget option will be executed automatically at the end of a passive install.</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
-			<xs:attribute name="LaunchQuiet" type="YesNoType">
-				<xs:annotation>
-					<xs:documentation>If set to "yes", the LaunchTarget option will be executed automatically at the end of a quiet install.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="SuppressDowngradeFailure" type="YesNoType">
+            <xs:attribute name="LaunchQuiet" type="YesNoType">
+                <xs:annotation>
+                    <xs:documentation>If set to "yes", the LaunchTarget option will be executed automatically at the end of a quiet install.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="SuppressDowngradeFailure" type="YesNoType">
                 <xs:annotation>
                     <xs:documentation>If set to "yes", attempting to installer a downgraded version of a bundle will be treated as a successful do-nothing operation.
                     The default behavior (or when explicitly set to "no") is to treat downgrade attempts as failures. </xs:documentation>
