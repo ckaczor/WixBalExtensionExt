@@ -100,6 +100,32 @@ namespace Microsoft.Tools.WindowsInstallerXml.Extensions
         {
             switch (parentElement.LocalName)
             {
+                case "ExePackage":
+                case "MsiPackage":
+                case "MspPackage":
+                case "MsuPackage":
+                    string packageId;
+                    if (!contextValues.TryGetValue("PackageId", out packageId) || String.IsNullOrEmpty(packageId))
+                    {
+                        this.Core.OnMessage(WixErrors.ExpectedAttribute(sourceLineNumbers, parentElement.LocalName, "Id", attribute.LocalName));
+                    }
+                    else
+                    {
+                        switch (attribute.LocalName)
+                        {
+                            case "PrereqSupportPackage":
+                                if (YesNoType.Yes == this.Core.GetAttributeYesNoValue(sourceLineNumbers, attribute))
+                                {
+                                    Row row = this.Core.CreateRow(sourceLineNumbers, "MbaPrerequisiteSupportPackage");
+                                    row[0] = packageId;
+                                }
+                                break;
+                            default:
+                                this.Core.UnexpectedAttribute(sourceLineNumbers, attribute);
+                                break;
+                        }
+                    }
+                        break;
                 case "Variable":
                     // at the time the extension attribute is parsed, the compiler might not yet have
                     // parsed the Name attribute, so we need to get it directly from the parent element.
@@ -208,6 +234,10 @@ namespace Microsoft.Tools.WindowsInstallerXml.Extensions
         {
             SourceLineNumberCollection sourceLineNumbers = Preprocessor.GetSourceLineNumbers(node);
             string launchTarget = null;
+            string launchTargetElevatedId = null;
+            string launchArguments = null;
+            YesNoType launchHidden = YesNoType.NotSet;
+            string launchWorkingDir = null;
             string licenseFile = null;
             string licenseUrl = null;
             string logoFile = null;
@@ -218,6 +248,8 @@ namespace Microsoft.Tools.WindowsInstallerXml.Extensions
             YesNoType suppressDowngradeFailure = YesNoType.NotSet;
             YesNoType suppressRepair = YesNoType.NotSet;
             YesNoType showVersion = YesNoType.NotSet;
+            YesNoType supportCacheOnly = YesNoType.NotSet;
+            YesNoType showFilesInUse = YesNoType.NotSet;
             YesNoType launchPassive = YesNoType.NotSet;
             YesNoType launchQuiet = YesNoType.NotSet;
 
@@ -229,6 +261,18 @@ namespace Microsoft.Tools.WindowsInstallerXml.Extensions
                     {
                         case "LaunchTarget":
                             launchTarget = this.Core.GetAttributeValue(sourceLineNumbers, attrib, false);
+                            break;
+                        case "LaunchTargetElevatedId":
+                            launchTargetElevatedId = this.Core.GetAttributeIdentifierValue(sourceLineNumbers, attrib);
+                            break;
+                        case "LaunchArguments":
+                            launchArguments = this.Core.GetAttributeValue(sourceLineNumbers, attrib, false);
+                            break;
+                        case "LaunchHidden":
+                            launchHidden = this.Core.GetAttributeYesNoValue(sourceLineNumbers, attrib);
+                            break;
+                        case "LaunchWorkingFolder":
+                            launchWorkingDir = this.Core.GetAttributeValue(sourceLineNumbers, attrib, false);
                             break;
                         case "LicenseFile":
                             licenseFile = this.Core.GetAttributeValue(sourceLineNumbers, attrib, false);
@@ -265,6 +309,12 @@ namespace Microsoft.Tools.WindowsInstallerXml.Extensions
                             break;
                         case "ShowVersion":
                             showVersion = this.Core.GetAttributeYesNoValue(sourceLineNumbers, attrib);
+                            break;
+                        case "SupportCacheOnly":
+                            supportCacheOnly = this.Core.GetAttributeYesNoValue(sourceLineNumbers, attrib);
+                            break;
+                        case "ShowFilesInUse":
+                            showFilesInUse = this.Core.GetAttributeYesNoValue(sourceLineNumbers, attrib);
                             break;
                         default:
                             this.Core.UnexpectedAttribute(sourceLineNumbers, attrib);
@@ -304,6 +354,26 @@ namespace Microsoft.Tools.WindowsInstallerXml.Extensions
                     this.Core.CreateVariableRow(sourceLineNumbers, "LaunchTarget", launchTarget, "string", false, false);
                 }
 
+                if (!String.IsNullOrEmpty(launchTargetElevatedId))
+                {
+                    this.Core.CreateVariableRow(sourceLineNumbers, "LaunchTargetElevatedId", launchTargetElevatedId, "string", false, false);
+                }
+
+                if (!String.IsNullOrEmpty(launchArguments))
+                {
+                    this.Core.CreateVariableRow(sourceLineNumbers, "LaunchArguments", launchArguments, "string", false, false);
+                }
+
+                if (YesNoType.Yes == launchHidden)
+                {
+                    this.Core.CreateVariableRow(sourceLineNumbers, "LaunchHidden", "yes", "string", false, false);
+                }
+
+                if (!String.IsNullOrEmpty(launchWorkingDir))
+                {
+                    this.Core.CreateVariableRow(sourceLineNumbers, "LaunchWorkingFolder", launchWorkingDir, "string", false, false);
+                }
+
                 if (!String.IsNullOrEmpty(licenseFile))
                 {
                     this.Core.CreateWixVariableRow(sourceLineNumbers, "WixExtbaLicenseRtf", licenseFile, false);
@@ -334,7 +404,7 @@ namespace Microsoft.Tools.WindowsInstallerXml.Extensions
                     this.Core.CreateWixVariableRow(sourceLineNumbers, "WixExtbaThemeWxl", localizationFile, false);
                 }
 
-                if (YesNoType.Yes == suppressOptionsUI || YesNoType.Yes == suppressDowngradeFailure || YesNoType.Yes == suppressRepair)
+                if (YesNoType.Yes == suppressOptionsUI || YesNoType.Yes == suppressDowngradeFailure || YesNoType.Yes == suppressRepair || YesNoType.Yes == showVersion || YesNoType.Yes == supportCacheOnly || YesNoType.Yes == showFilesInUse)
                 {
                     Row row = this.Core.CreateRow(sourceLineNumbers, "WixExtbaOptions");
                     if (YesNoType.Yes == suppressOptionsUI)
@@ -357,15 +427,25 @@ namespace Microsoft.Tools.WindowsInstallerXml.Extensions
                         row[3] = 1;
                     }
 
-                    if (YesNoType.Yes == launchPassive)
+                    if (YesNoType.Yes == showFilesInUse)
                     {
                         row[4] = 1;
                     }
 
-                    if (YesNoType.Yes == launchQuiet)
+                    if (YesNoType.Yes == supportCacheOnly)
                     {
                         row[5] = 1;
                     }
+					
+                    if (YesNoType.Yes == launchPassive)
+                    {
+                        row[6] = 1;
+                    }
+
+                    if (YesNoType.Yes == launchQuiet)
+                    {
+                        row[7] = 1;
+                    }					
                 }
             }
         }

@@ -5,7 +5,7 @@
   
   It also shows the use of two folder selections and radio buttons on the options page.
 -->
-<Wix RequiredVersion="3.7.1224.0" 
+<Wix RequiredVersion="3.10.0.2103" 
   xmlns="http://schemas.microsoft.com/wix/2006/wi"
   xmlns:bal="http://schemas.microsoft.com/wix/BalExtension"
   xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
@@ -13,7 +13,10 @@
     Manufacturer="ACME"
     AboutUrl="http://wixtoolset.org">
 
-    <Update Location="http://wixtoolset.org/releases/feed/v3.7"/>
+    <!--<Update Location="https://extranet.paxton-access.co.uk/download%20files/Net2/Upgrade.asp?version=4.27.0.0"/>-->
+    <!-- \\planck\File registry\Downloads\Net2 -->
+    <!--<Update Location="https://extranet.paxton-access.co.uk/download%20files/Net2/Upgrade5Test.asp?version=5.0.0.0"/>-->
+    <Update Location="http://localhost/Upgrade5.aspx?version=5.0.0.0"/>
 
     <BootstrapperApplicationRef Id="WixExtendedBootstrapperApplication.HyperlinkLicense">
       <Payload SourceFile="Resource\License.htm" />

@@ -4,7 +4,7 @@
   
   It also shows how to use the custom action extension.
 -->
-<Wix RequiredVersion="3.7.1224.0" 
+<Wix RequiredVersion="3.10.0.2103" 
   xmlns="http://schemas.microsoft.com/wix/2006/wi"
   xmlns:bal="http://schemas.microsoft.com/wix/BalExtension"
   xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">

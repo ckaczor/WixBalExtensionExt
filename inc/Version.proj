@@ -2,7 +2,7 @@
 <Project DefaultTargets="WriteVersionFiles" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <MajorBuildNumber>3</MajorBuildNumber>
-    <MinorBuildNumber>8</MinorBuildNumber>
+    <MinorBuildNumber>10</MinorBuildNumber>
 
     <CppVersionFile>.\wixver.h</CppVersionFile>
     <CSharpVersionFile>.\wixver.cs</CSharpVersionFile>

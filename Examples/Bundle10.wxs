@@ -4,14 +4,14 @@
   
   It also shows how to use the custom action extension.
 -->
-<Wix RequiredVersion="3.7.1224.0" 
+<Wix RequiredVersion="3.10.0.2103" 
   xmlns="http://schemas.microsoft.com/wix/2006/wi"
   xmlns:bal="http://schemas.microsoft.com/wix/BalExtension"
   xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <Bundle Name="Sample Burn Installation" Version="$(bal.Version(1.0))" UpgradeCode="2C81F0BB-1891-4E83-B71A-5160BA33D985"
     Manufacturer="ACME"
     AboutUrl="http://wixtoolset.org">
-
+    
     <BootstrapperApplicationRef Id="WixExtendedBootstrapperApplication.HyperlinkLicense">
       <!-- Note: the name attibute must be "bafunctions.dll" but the source can be anything -->
       <Payload Name="bafunctions.dll" Compressed="yes" SourceFile="bafunctions.dll" />

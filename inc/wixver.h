@@ -2,12 +2,12 @@
 #ifndef _VERSION_FILE_H_
 #define _VERSION_FILE_H_
 
-#define szVerMajorMinor "3.8"
-#define szVerMajorMinorBuildRev "3.8.5260.23891"
+#define szVerMajorMinor "3.10"
+#define szVerMajorMinorBuildRev "3.10.5758.27000"
 #define rmj	3
-#define rmm	8
-#define rbd	5260
-#define rev	23891
+#define rmm	10
+#define rbd	5758
+#define rev	27000
 #define szVerName	"BalExtensionExt Release"
 
 #endif

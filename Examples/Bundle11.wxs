@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!--
   This example demonstrates the Hyperlink2License UI built in to WixBalExtensionExt.
-  
+
   It also shows how to use the custom action extension.
   Delayed OnDetect() to show splash screen.
 -->
-<Wix RequiredVersion="3.7.1224.0" 
+<Wix RequiredVersion="3.10.0.2103"
   xmlns="http://schemas.microsoft.com/wix/2006/wi"
   xmlns:bal="http://schemas.microsoft.com/wix/BalExtension"
   xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
@@ -13,7 +13,7 @@
     Manufacturer="ACME"
     SplashScreenSourceFile="Resource\SplashScreen.bmp"
     AboutUrl="http://wixtoolset.org">
-    
+
     <!-- This will delay the start by the time specified (in milloseconds) -->
     <Variable Name="DelayStart" Type="numeric" Value="1000" />
 

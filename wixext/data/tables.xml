@@ -27,6 +27,10 @@
                 maxValue="1" description="If 1, don't show Repair button during maintenance."/>
         <columnDefinition name="ShowVersion" type="number" length="2" nullable="yes"
                 maxValue="1" description="If 1, show the version number on the UI."/>
+        <columnDefinition name="ShowFilesInUse" type="number" length="2" nullable="yes"
+                maxValue="1" description="If 1, show a special page when files are in use."/>
+        <columnDefinition name="SupportCacheOnly" type="number" length="2" nullable="yes"
+                maxValue="1" description="If 1, the bundle can be pre-cached using the /cache command line argument."/>
         <columnDefinition name="LaunchPassive" type="number" length="2" nullable="yes"
                 maxValue="1" description="If 1, execute LaunchTarget automatically during passive install."/>
         <columnDefinition name="LaunchQuiet" type="number" length="2" nullable="yes"

@@ -5,7 +5,7 @@
   
   It also shows the use of radio buttons install page and a textbox on the options page.
 -->
-<Wix RequiredVersion="3.7.1224.0" 
+<Wix RequiredVersion="3.10.0.2103" 
   xmlns="http://schemas.microsoft.com/wix/2006/wi"
   xmlns:bal="http://schemas.microsoft.com/wix/BalExtension"
   xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
