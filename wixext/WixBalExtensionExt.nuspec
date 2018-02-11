@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
-        <!-- Required elements-->
         <id>WixBalExtensionExt</id>
-        <version></version>
-        <description></description>
+        <version>1.0.0</version>
+        <description>A fork of of the extended WiX bootstrapper Application that adds options to automatically launch the installed application when running in either passive or quiet modes.</description>
         <authors>Chris Kaczor</authors>
     </metadata>
 </package>
