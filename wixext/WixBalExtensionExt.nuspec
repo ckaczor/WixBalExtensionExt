@@ -1,10 +1,15 @@
 <?xml version="1.0"?>
-<package>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>WixBalExtensionExt</id>
     <version>$version$</version>
     <authors>Chris Kaczor</authors>
-    <owners>Chris Kaczor</owners>
     <description>A fork of of the extended WiX bootstrapper Application that adds options to automatically launch the installed application when running in either passive or quiet modes.</description>
+    <projectUrl>https://github.com/ckaczor/WixBalExtensionExt</projectUrl>
+    <licenseUrl>https://raw.githubusercontent.com/ckaczor/WixBalExtensionExt/master/LICENSE.TXT</licenseUrl>
+    <tags>wix</tags>
   </metadata>
+  <files>
+    <file src="bin\$configuration$\WixBalExtensionExt.dll" target="lib" />
+  </files>
 </package>
