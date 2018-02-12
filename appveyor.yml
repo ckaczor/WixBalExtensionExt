@@ -1,0 +1,24 @@
+version: 1.0.0.{build}
+pull_requests:
+  do_not_increment_build_number: true
+image: Visual Studio 2015
+configuration: Release
+assembly_info:
+  patch: true
+  file: inc\wixver.cs
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+build:
+  verbosity: minimal
+after_build:
+- cmd: nuget pack wixext\WixBalExtensionExt.nuspec -Version %appveyor_build_version% -Properties Configuration=Release -OutputDirectory wixext\bin\Release\
+artifacts:
+- path: wixext\bin\$(configuration)\WixBalExtensionExt.dll
+  name: WixBalExtensionExt
+- path: wixext\bin\$(configuration)\WixBalExtensionExt.*.nupkg
+  name: NuGet
+deploy:
+- provider: Environment
+  name: GitHub
+- provider: Environment
+  name: NuGet
