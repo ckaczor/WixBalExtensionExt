@@ -3,6 +3,7 @@
 This is a fork of of the [extended WiX bootstrapper Application](https://wixextba.codeplex.com/) that adds options to automatically launch the installed application when running in either passive or quiet modes.
 
 [![Build status](https://ci.appveyor.com/api/projects/status/mxk75obwrs8y1089?svg=true)](https://ci.appveyor.com/project/ckaczor/wixbalextensionext)
+[![NuGet](https://img.shields.io/nuget/v/WixBalExtensionExt.svg)](https://www.nuget.org/packages/WixBalExtensionExt)
 
 ## Features
 
